@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project1/cubit/counter_cubit.dart';
+import 'package:project1/bloc/counter_bloc.dart';
+import 'package:project1/cubit/counter_cubit.dart' hide CounterState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
@@ -25,8 +26,10 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
     return BlocProvider(
-      create: (context) => CounterCubit(),
+      create: (context) => CounterBloc(),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -38,8 +41,10 @@ class MyHomePage extends StatelessWidget {
             mainAxisAlignment: .center,
             children: [
               const Text('You have pushed the button this many times:'),
-              BlocBuilder<CounterCubit, CounterState>(
+              BlocBuilder<CounterBloc, CounterState>(
                 builder: (context, state) {
+                  
+
                   return Text(
                     state.value.toString(),
                     style: Theme.of(context).textTheme.headlineMedium,
@@ -49,21 +54,23 @@ class MyHomePage extends StatelessWidget {
             ],
           ),
         ),
-        floatingActionButton: BlocBuilder<CounterCubit, CounterState>(
+        floatingActionButton: BlocBuilder<CounterBloc, CounterState>(
           builder: (context, state) {
+            
+
             return Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 FloatingActionButton(
                   heroTag: 'decrement',
-                  onPressed: context.read<CounterCubit>().decrement,
+                  onPressed: () => context.read<CounterBloc>().add(Decrement()),
                   tooltip: 'Decrement',
                   child: const Icon(Icons.remove),
                 ),
                 const SizedBox(width: 16),
                 FloatingActionButton(
                   heroTag: 'increment',
-                  onPressed: context.read<CounterCubit>().increment,
+                  onPressed: () => context.read<CounterBloc>().add(Increment()),
                   tooltip: 'Increment',
                   child: const Icon(Icons.add),
                 ),
