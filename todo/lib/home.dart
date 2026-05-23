@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/cubit/todo_cubit.dart';
+import 'package:todo/bloc/todo_bloc.dart';
+import 'package:todo/cubit/todo_cubit.dart' hide TodoState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
@@ -15,8 +16,8 @@ class Home extends StatelessWidget {
         backgroundColor: Colors.amber,
       ),
       body: BlocProvider(
-        create: (context) => TodoCubit(),
-        child: BlocBuilder<TodoCubit, TodoState>(
+        create: (context) => TodoBloc(),
+        child: BlocBuilder<TodoBloc, TodoState>(
           builder: (context, state) {
             return Column(
               children: [
@@ -34,7 +35,7 @@ class Home extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (controller.text.isEmpty) return;
-                    context.read<TodoCubit>().addTask(controller.text);
+                    context.read<TodoBloc>().add(AddTask(controller.text));
                     controller.clear();
                   },
                   child: Text("Add Task"),
@@ -45,13 +46,13 @@ class Home extends StatelessWidget {
                     itemBuilder: (context, index) => TodoCard(
                       title: state.todos[index].text,
                       value: state.todos[index].isCompeletd,
-                      onChanged: (v) {
-                        context.read<TodoCubit>().toggleTask(
-                          state.todos[index].id,
+                      onChanged: ( v) {
+                        context.read<TodoBloc>().add(
+                          CompeleteTask(state.todos[index].id),
                         );
                       },
-                      onPressed: () => context.read<TodoCubit>().deleteTask(
-                        state.todos[index].id,
+                      onPressed: () => context.read<TodoBloc>().add(
+                        DeleteTask(state.todos[index].id),
                       ),
                     ),
                   ),
