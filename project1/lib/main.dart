@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:project1/bloc/counter_bloc.dart';
-import 'package:project1/cubit/counter_cubit.dart' hide CounterState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
