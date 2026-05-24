@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo/bloc/todo_bloc.dart';
-import 'package:todo/cubit/todo_cubit.dart' hide TodoState;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 // ignore: must_be_immutable
@@ -45,8 +44,8 @@ class Home extends StatelessWidget {
                     itemCount: state.todos.length,
                     itemBuilder: (context, index) => TodoCard(
                       title: state.todos[index].text,
-                      value: state.todos[index].isCompeletd,
-                      onChanged: ( v) {
+                      value: state.todos[index].isCompleted,
+                      onChanged: (v) {
                         context.read<TodoBloc>().add(
                           CompeleteTask(state.todos[index].id),
                         );

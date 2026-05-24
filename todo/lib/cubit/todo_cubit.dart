@@ -11,7 +11,7 @@ class TodoCubit extends Cubit<TodoState> {
     TaskModel task = TaskModel(
       id: DateTime.now().millisecondsSinceEpoch,
       text: text,
-      isCompeletd: false,
+      isCompleted: false,
     );
     emit(UpdataTodoList([...state.todos, task]));
   }
@@ -26,7 +26,7 @@ class TodoCubit extends Cubit<TodoState> {
   toggleTask(int id) {
     final List<TaskModel> newList = state.todos.map((task) {
       return task.id == id
-          ? task.copyWith(isCompeletd: !task.isCompeletd)
+          ? task.copyWith(isCompleted: !task.isCompleted)
           : task;
     }).toList();
     emit(UpdataTodoList(newList));
